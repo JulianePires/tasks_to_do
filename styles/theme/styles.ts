@@ -1,7 +1,7 @@
 const styles = {
   global: {
     body: {
-      fontFamily: "Roboto",
+      fontFamily: "Montserrat",
       letterSpacing: "tight",
       lineHeight: "short",
       fontSize: {

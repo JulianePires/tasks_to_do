@@ -1,6 +1,7 @@
-import { Flex, Heading, Image } from "@chakra-ui/react";
+import { Flex, Text, VStack, HStack, Button } from "@chakra-ui/react";
 
 import Layout from "../components/Layout";
+import { Logo } from "../components/Logo";
 
 export default function Home() {
   return (
@@ -8,19 +9,25 @@ export default function Home() {
       <Flex
         w="100%"
         h="100vh"
+        p="10"
         bgColor="blackAlpha.900"
         flexDirection="column"
         alignItems="center"
-        justifyContent="center"
+        justifyContent="space-evenly"
       >
-        <Heading color="whiteAlpha.900" m="4">
-          Boilerplate Next.js + Typescript + Chakra UI + React Query
-        </Heading>
-        <Image
-          w="2xl"
-          src="https://insideblock.com/assets/blog/nextjs-o-hype-da-hora-que-esta-dominando-o-desenvolvimento-front-end.png"
-          alt="Next"
-        />
+        <Logo />
+
+        <VStack>
+          <Text fontSize="xl">Crie</Text>
+          <Text fontSize="xl">Categorize</Text>
+          <Text fontSize="xl">Liste</Text>
+          <Text fontSize="xl">Check</Text>
+        </VStack>
+
+        <HStack>
+          <Button size="lg" colorScheme="blue">Entrar</Button>
+          <Button size="lg" colorScheme="orange" variant="outline">Criar</Button>
+        </HStack>
       </Flex>
     </Layout>
   );

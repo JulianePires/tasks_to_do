@@ -17,7 +17,7 @@ const Layout = ({ title, children }: LayoutProps) => {
           name="description"
           content="Temperature conversor made with Next JS, Material UI and Typescript"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
@@ -25,7 +25,7 @@ const Layout = ({ title, children }: LayoutProps) => {
           rel="stylesheet"
         />
       </Head>
-      <body>{children}</body>
+      {children}
     </>
   );
 };
