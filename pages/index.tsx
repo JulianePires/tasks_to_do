@@ -1,32 +1,50 @@
-import { Flex, Text, VStack, HStack, Button } from "@chakra-ui/react";
+import { Button, Flex, HStack, VStack } from "@chakra-ui/react";
+import { useRouter } from "next/dist/client/router";
 
+import { CheckText } from "../components/CheckText";
 import Layout from "../components/Layout";
 import { Logo } from "../components/Logo";
+import { SwitchTheme } from "../components/SwitchTheme";
+import { NavigationPaths } from "../constants/index";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
-    <Layout title="Next-Typescript-ChakraUI Boilerplate">
+    <Layout title="Início | TTD">
       <Flex
         w="100%"
         h="100vh"
         p="10"
-        bgColor="blackAlpha.900"
         flexDirection="column"
         alignItems="center"
         justifyContent="space-evenly"
       >
+        <SwitchTheme />
         <Logo />
 
         <VStack>
-          <Text fontSize="xl">Crie</Text>
-          <Text fontSize="xl">Categorize</Text>
-          <Text fontSize="xl">Liste</Text>
-          <Text fontSize="xl">Check</Text>
+          <CheckText label="Crie" />
+          <CheckText label="Categorize" />
+          <CheckText label="Liste" />
+          <CheckText label="Check" />
         </VStack>
 
         <HStack>
-          <Button size="lg" colorScheme="blue">Entrar</Button>
-          <Button size="lg" colorScheme="orange" variant="outline">Criar</Button>
+          <Button
+            size="lg"
+            variant="solid"
+            onClick={() => router.push(NavigationPaths.LOGIN)}
+          >
+            Entrar
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            onClick={() => router.push(NavigationPaths.CREATE)}
+          >
+            Criar
+          </Button>
         </HStack>
       </Flex>
     </Layout>
