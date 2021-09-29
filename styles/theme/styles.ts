@@ -1,8 +1,9 @@
-import { ChakraProps } from "@chakra-ui/system";
+
+import { CSSObject } from "@chakra-ui/styled-system";
 import { mode } from "@chakra-ui/theme-tools"
 
 const styles = {
-  global: (props: ChakraProps) => ({
+  global: (props: CSSObject) => ({
     body: {
       fontFamily: "Montserrat",
       letterSpacing: "tight",

@@ -9,6 +9,7 @@ export function BackButton() {
       variant="outline"
       onClick={back}
       fontSize="2xl"
+      fontWeight="semibold"
       icon={<IoIosArrowRoundBack />}
     />
   );
