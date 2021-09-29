@@ -1,8 +1,20 @@
-import Layout from "../components/Layout/index";
-import { Flex, HStack } from "@chakra-ui/react";
-import { SwitchTheme } from "../components/SwitchTheme/index";
-import { Logo } from "../components/Logo/index";
-import { BackButton } from "../components/BackButton/index";
+import {
+  Flex,
+  HStack,
+  Icon,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
+  VStack,
+} from "@chakra-ui/react";
+import { MdLock, MdMail, MdVisibility } from "react-icons/md";
+
+import { BackButton } from "../components/BackButton";
+import { Form } from "../components/Form";
+import Layout from "../components/Layout";
+import { Logo } from "../components/Logo";
+import { SwitchTheme } from "../components/SwitchTheme";
 
 export default function Login() {
   return (
@@ -15,12 +27,15 @@ export default function Login() {
         alignItems="center"
         justifyContent="space-evenly"
       >
-        <HStack>
-          <BackButton />
-          <SwitchTheme />
-        </HStack>
+        <VStack>
+          <HStack>
+            <BackButton />
+            <SwitchTheme />
+          </HStack>
+          <Logo />
+        </VStack>
 
-        <Logo />
+        <Form type="login"/>
       </Flex>
     </Layout>
   );

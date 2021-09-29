@@ -1,8 +1,9 @@
 import Layout from "../components/Layout/index";
-import { Flex, HStack } from "@chakra-ui/react";
+import { Flex, HStack, VStack } from "@chakra-ui/react";
 import { SwitchTheme } from "../components/SwitchTheme/index";
 import { Logo } from "../components/Logo/index";
 import { BackButton } from "../components/BackButton/index";
+import { Form } from "../components/Form";
 
 export default function Create() {
   return (
@@ -15,11 +16,15 @@ export default function Create() {
         alignItems="center"
         justifyContent="space-evenly"
       >
-        <HStack>
-          <BackButton />
-          <SwitchTheme />
-        </HStack>
-        <Logo />
+        <VStack>
+          <HStack>
+            <BackButton />
+            <SwitchTheme />
+          </HStack>
+          <Logo />
+        </VStack>
+
+        <Form type="createUser"/>
       </Flex>
     </Layout>
   );

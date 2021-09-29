@@ -20,8 +20,10 @@ export default function Home() {
         alignItems="center"
         justifyContent="space-evenly"
       >
-        <SwitchTheme />
-        <Logo />
+        <VStack>
+          <SwitchTheme />
+          <Logo />
+        </VStack>
 
         <VStack>
           <CheckText label="Crie" />

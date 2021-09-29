@@ -6,9 +6,10 @@ export function SwitchTheme() {
   return (
     <IconButton
       aria-label="switch theme"
-      colorScheme="blue"
-      variant="ghost"
-      icon={<MdBrightness4 />}
+      colorScheme="orange"
+      variant="outline"
+      color={colorMode === "dark" ? "white" : "orange.500"}
+      icon={<MdBrightness4  />}
       onClick={toggleColorMode}
     />
   );
