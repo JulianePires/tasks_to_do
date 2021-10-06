@@ -14,5 +14,12 @@ export const Button = {
         background: "orange.300",
       },
     },
+    'toolbar' : {
+      background: "orange.500",
+      color: "whiteAlpha.900",
+      _hover: {
+        background: "orange.300",
+      },
+    }
   },
 };
