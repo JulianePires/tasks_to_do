@@ -1,113 +1,71 @@
-import {
-  Flex,
-  Table,
-  Thead,
-  Th,
-  Tbody,
-  Td,
-  Tr,
-  Tfoot,
-  Box,
-  Checkbox,
-  IconButton,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Input, useDisclosure } from "@chakra-ui/react";
+import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
 import { useState } from "react";
 
 import { Header } from "../components/Header";
 import Layout from "../components/Layout";
+import { TaskView } from "../components/TaskView";
 import { Toolbar } from "../components/Toolbar";
+import { Paths } from "../constants/paths";
+import { useGetLoggedUser } from "../hooks/useLoggedUser";
+import { useGetTasks } from "../hooks/useManageTasks";
+import { TOKEN_KEY } from "../services/authenticated";
 import { Views } from "../types";
-import { IoMdTrash } from "react-icons/io";
+import { NewTaskModal } from '../components/NewTaskModal/index';
 
 export default function HomePage() {
   const [currentView, setCurrentView] = useState<Views>("todo");
+  const [searchValue, setSearchValue] = useState<string>("");
+
+  function onChangeSearchValue(value: string) {
+    setSearchValue(value);
+  }
+
+  const { data } = useGetLoggedUser();
+  const {isOpen, onOpen, onClose} = useDisclosure();
+
   return (
     <Layout title="Home | TTD">
       <Flex w="100%" h="100vh" flexDirection="column" alignItems="center">
-        <Header />
+        <Header name={data?.userName!} />
         <Toolbar
           currentView={currentView}
           onChangeView={(view) => setCurrentView(view)}
         />
         <Box w="80%">
-             {/*TODO: Adicionar um botão de add tasks  */}
-             {/*TODO: Deixar o layout responsivo  */}
-             
-          <Table colorScheme="orange" size="sm" px="10" mt="8">
-            <Thead>
-              <Tr>
-                <Th color="orange">Name</Th>
-                <Th color="orange" textAlign="center">Priority</Th>
-                <Th color="orange" textAlign="center">Expires in</Th>
-                <Th color="orange" textAlign="center">Is Done</Th>
-                <Th color="orange" isNumeric>Remove</Th>
-              </Tr>
-            </Thead>
-            <Tbody fontWeight="semibold">
-              <Tr>
-                <Td>Lavar a louça</Td>
-                <Td textAlign="center" fontWeight="semibold" color="red.600">
-                  High
-                </Td>
-                <Td textAlign="center">29/05</Td>
-                <Td textAlign="center">
-                  <Checkbox />
-                </Td>
-                <Td isNumeric>
-                  <IconButton
-                    variant="ghost"
-                    aria-label="remove"
-                    icon={<IoMdTrash />}
-                  />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>Fazer exercícios</Td>
-                <Td textAlign="center" fontWeight="semibold" color="yellow.600">
-                  Medium
-                </Td>
-                <Td textAlign="center">29/07</Td>
-                <Td textAlign="center">
-                  <Checkbox />
-                </Td>
-                <Td isNumeric>
-                  <IconButton
-                    variant="ghost"
-                    aria-label="remove"
-                    icon={<IoMdTrash />}
-                  />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>Organizar os livros</Td>
-                <Td textAlign="center" fontWeight="semibold" color="green.600">
-                  Low
-                </Td>
-                <Td textAlign="center">29/02</Td>
-                <Td textAlign="center">
-                  <Checkbox />
-                </Td>
-                <Td isNumeric>
-                  <IconButton
-                    variant="ghost"
-                    aria-label="remove"
-                    icon={<IoMdTrash />}
-                  />
-                </Td>
-              </Tr>
-            </Tbody>
-            <Tfoot>
-              <Tr>
-                <Th color="orange">Name</Th>
-                <Th color="orange" textAlign="center">Priority</Th>
-                <Th color="orange" textAlign="center">Expires in</Th>
-                <Th color="orange" textAlign="center">Is Done</Th>
-                <Th color="orange" isNumeric>Remove</Th>
-              </Tr>
-            </Tfoot>
-          </Table>
+          <HStack spacing="auto" mt={["4", "5", "8"]}>
+            <Button onClick={onOpen}>New Task</Button>
+            <Input
+              w="50%"
+              placeholder="Task name"
+              colorScheme="orange"
+              variant="filled"
+              value={searchValue}
+              onChange={({ target }) => onChangeSearchValue(target.value)}
+            />
+          </HStack>
+          <TaskView search={searchValue} view={currentView} />
         </Box>
+        <NewTaskModal isOpen={isOpen} onClose={onClose} />
       </Flex>
     </Layout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { [TOKEN_KEY]: token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: Paths.START,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { token },
+  };
+};

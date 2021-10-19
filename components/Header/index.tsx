@@ -3,9 +3,22 @@ import { IoMdLogOut } from "react-icons/io";
 
 import { Logo } from "../Logo";
 import { SwitchTheme } from "../SwitchTheme";
+import { logout } from "../../services/authenticated";
+import { useRouter } from "next/router";
+import { Paths } from "../../constants/paths";
 
-export function Header() {
-  const name = "Juliane";
+interface HeaderProps {
+  name: string;
+}
+
+export function Header({ name }: HeaderProps) {
+  const router = useRouter();
+
+  function handleLogout() {
+    logout();
+    router.push(Paths.START);
+  }
+
   return (
     <HStack
       maxH="28"
@@ -16,7 +29,7 @@ export function Header() {
     >
       <IconButton
         aria-label="menu"
-        onClick={() => {}}
+        onClick={handleLogout}
         fontSize="xl"
         icon={<IoMdLogOut />}
       />

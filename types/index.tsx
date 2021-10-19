@@ -1,1 +1,0 @@
-export type Views = "todo" | "done" | "priority" | "date" | "search";

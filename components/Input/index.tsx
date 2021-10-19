@@ -6,8 +6,11 @@ import {
   InputRightAddon,
 } from "@chakra-ui/react";
 import React, { ChangeEventHandler, useState } from "react";
+import DatePicker from "react-datepicker";
 import { IconType } from "react-icons";
+import { IoMdCalendar } from "react-icons/io";
 import {
+  MdCreate,
   MdLock,
   MdMail,
   MdPerson,
@@ -32,7 +35,7 @@ type InputInfoType = {
 
 interface InputProps {
   type: InputTypes;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange: (date: string) => void;
   value: string | undefined;
 }
 
@@ -43,6 +46,13 @@ function switchInputType(type: InputTypes, isVisible: boolean = false) {
     type: "text",
   };
   switch (type) {
+    case "title":
+      InputInfo = {
+        leftIcon: MdCreate,
+        placeholder: "Task Title",
+        type: "text",
+      };
+      return InputInfo;
     case "email":
       InputInfo = {
         leftIcon: MdMail,
@@ -56,6 +66,14 @@ function switchInputType(type: InputTypes, isVisible: boolean = false) {
         placeholder: "Password",
         type: isVisible ? "text" : "password",
         rightIcon: isVisible ? MdVisibility : MdVisibilityOff,
+      };
+      return InputInfo;
+
+    case "date":
+      InputInfo = {
+        leftIcon: IoMdCalendar,
+        placeholder: "DueDate",
+        type: "date",
       };
       return InputInfo;
     default:
@@ -75,13 +93,20 @@ export function Input({ type, onChange, value }: InputProps) {
       <InputLeftAddon bg="orange.500">
         <Icon color="whiteAlpha.900" as={switchInputType(type).leftIcon} />
       </InputLeftAddon>
-      <ChakraInput
-        colorScheme="orange"
-        placeholder={switchInputType(type).placeholder}
-        type={switchInputType(type).type}
-        onChange={onChange}
-        value={value}
-      />
+      {type === "date" ? (
+        <DatePicker
+          onChange={(date) => onChange(date?.toString()!)}
+          value={value}
+        />
+      ) : (
+        <ChakraInput
+          colorScheme="orange"
+          placeholder={switchInputType(type).placeholder}
+          type={switchInputType(type).type}
+          onChange={({ target }) => onChange(target.value)}
+          value={value}
+        />
+      )}
       {type === "password" && (
         <InputRightAddon bg="orange.500">
           <Icon

@@ -16,5 +16,9 @@ module.exports = (phase, { defaultConfig }) => {
       return config;
     },
     ...withImages(defaultConfig),
+
+    env: {
+      NEXT_PUBLIC_AZURE: process.env.NEXT_PUBLIC_AZURE,
+    },
   };
 };

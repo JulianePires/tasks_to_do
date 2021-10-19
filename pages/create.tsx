@@ -4,6 +4,11 @@ import { SwitchTheme } from "../components/SwitchTheme/index";
 import { Logo } from "../components/Logo/index";
 import { BackButton } from "../components/BackButton/index";
 import { Form } from "../components/Form";
+import { RegisterForm } from "../components/RegisterForm/index";
+import { GetServerSideProps } from "next";
+import { TOKEN_KEY } from "../services/authenticated";
+import { parseCookies } from "nookies";
+import { Paths } from "../constants/paths";
 
 export default function Create() {
   return (
@@ -24,8 +29,25 @@ export default function Create() {
           <Logo />
         </VStack>
 
-        <Form type="createUser"/>
+        <RegisterForm />
       </Flex>
     </Layout>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { [TOKEN_KEY]: token } = parseCookies(ctx);
+
+  if (token) {
+    return {
+      redirect: {
+        destination: Paths.HOME,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { token },
+  };
+};
