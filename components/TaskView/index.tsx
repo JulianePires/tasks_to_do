@@ -46,6 +46,13 @@ export function TaskView({ view, search }: TaskViewProps) {
     ),
   };
 
+  useEffect(() => {
+    queryClient.resetQueries(GET_TASKS_KEY);
+    queryClient.refetchQueries(GET_TASKS_KEY);
+    queryClient.resetQueries(GET_TASKS_PRIORITY_KEY);
+    queryClient.refetchQueries(GET_TASKS_PRIORITY_KEY);
+  }, [search])
+
   const editTaskMutation = useChangeTaskStatus();
   const deleteTaskMutation = useDeleteTask();
 
@@ -68,7 +75,7 @@ export function TaskView({ view, search }: TaskViewProps) {
   return (
     <>
       {requestbyView[view]?.map((task) => (
-        <VStack key={task.idTask}>
+        <VStack mt="6" key={task.idTask}>
           <MobileTask
             name={task.taskName}
             dueDate={task.deadLine}
