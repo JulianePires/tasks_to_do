@@ -5,6 +5,7 @@ import {
   FcLowPriority,
   FcMediumPriority,
 } from "react-icons/fc";
+import { format } from "date-fns";
 
 interface MobileTaskProps {
   name: string;
@@ -31,7 +32,7 @@ export function MobileTask({
         {name}
       </Checkbox>
       <Icon fontSize="xl" as={priorityIcons[priority]} />
-      <Text>Expires in {dueDate}</Text>
+      <Text>Expires in {format(new Date(dueDate), "dd/MM")}</Text>
       <IconButton
         onClick={onDelete}
         variant="ghost"

@@ -114,7 +114,7 @@ export function NewTaskModal({ isOpen, onClose }: NewTaskModalProps) {
               isInvalid={!!formik.errors.priority}
             >
               <Select
-                value={
+                placeholder={
                   formik.values.priority === 0
                     ? "Low"
                     : formik.values.priority === 1
