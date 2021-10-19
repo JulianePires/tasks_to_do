@@ -10,7 +10,6 @@ import {
   Select,
   Input,
 } from "@chakra-ui/react";
-import { AxiosError } from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useCreateTask } from "../../hooks/useManageTasks";
@@ -58,13 +57,13 @@ export function NewTaskModal({ isOpen, onClose }: NewTaskModalProps) {
     }),
 
     onSubmit: (values, actions) => {
-      mutate(values,{
+      mutate(values, {
         onSuccess: () => {
           onClose();
         },
         onError: () => {
-          actions.setFieldError("priority", "Ocorreu um erro ao criar a task")
-        }
+          actions.setFieldError("priority", "Ocorreu um erro ao criar a task");
+        },
       });
     },
   });
@@ -115,12 +114,23 @@ export function NewTaskModal({ isOpen, onClose }: NewTaskModalProps) {
               isInvalid={!!formik.errors.priority}
             >
               <Select
-                value={formik.values.priority}
-                onChange={formik.handleChange("priority")}
+                value={
+                  formik.values.priority === 0
+                    ? "Low"
+                    : formik.values.priority === 1
+                    ? "Medium"
+                    : "High"
+                }
               >
-                <option value={2}>High</option>
-                <option value={1}>Medium</option>
-                <option value={0}>Low</option>
+                <option onClick={() => formik.setFieldValue("priority", 2)}>
+                  High
+                </option>
+                <option onClick={() => formik.setFieldValue("priority", 1)}>
+                  Medium
+                </option>
+                <option onClick={() => formik.setFieldValue("priority", 0)}>
+                  Low
+                </option>
               </Select>
               <FormErrorMessage>{formik.errors.priority}</FormErrorMessage>
             </FormControl>
