@@ -28,7 +28,7 @@ export const useGetTasksByPriority = () => {
 };
 
 const createTask = async (info: CreateTaskInfo) => {
-  const { data } = await api.post<Tasks[]>("/Todo", info);
+  const { data } = await api.post("/Todo", info);
   return data;
 };
 

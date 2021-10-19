@@ -10,6 +10,7 @@ import {
   Select,
   Input,
 } from "@chakra-ui/react";
+import { AxiosError } from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useCreateTask } from "../../hooks/useManageTasks";
@@ -56,8 +57,15 @@ export function NewTaskModal({ isOpen, onClose }: NewTaskModalProps) {
         .required("Priority is required"),
     }),
 
-    onSubmit: (values) => {
-      mutate(values);
+    onSubmit: (values, actions) => {
+      mutate(values,{
+        onSuccess: () => {
+          onClose();
+        },
+        onError: () => {
+          actions.setFieldError("priority", "Ocorreu um erro ao criar a task")
+        }
+      });
     },
   });
 
